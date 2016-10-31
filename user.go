@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	db "gopkg.in/dancannon/gorethink.v2"
+	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+// CreateUser generates a record in the database
+// so user data can be persistent independent of
+// of client device
+func CreateUser(w http.ResponseWriter, r *http.Request) {
 	session, err := db.Connect(db.ConnectOpts{
 		Address: "localhost:28015",
 	})
@@ -24,7 +27,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Query error ===> ", err.Error())
 }
 
-func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8081", nil)
+// Auth authenticates an existing user via a
+// username/password combination
+func Auth(w http.ResponseWriter, r *http.Request) {
+
 }
